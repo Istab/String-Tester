@@ -42,7 +42,18 @@ switch ($action) {
          * validate and process the email address
          ************************************************/
         // 1. make sure the user enters an email
+	if(empty($email)) {
+	  $message = "Please provide an email address.";
+	  break;
+	}
         // 2. make sure the email address has at least one @ sign and one dot character
+	if(strpos($email, '@') === false || strpos($email, '.') === false) {
+	  $message = "The email you provided is not valid.";
+	  break;
+	}
+
+	// 3. Add the email to the message
+	$message .= "Email: $email\n";
 
         /*************************************************
          * validate and process the phone number
