@@ -59,7 +59,19 @@ switch ($action) {
          * validate and process the phone number
          ************************************************/
         // 1. make sure the user enters at least seven digits, not including formatting characters
+	$phone = preg_replace("/[^0-9]/", "", $phone); // Remove non digits
+	if (strlen($phone) < 7) {
+	  $message = 'Please provide a valid phone number';
+	  break;
+	}
         // 2. format the phone number like this 123-4567 or this 123-456-7890
+	$phone = substr_replace($phone, '-', 3, 0);
+	if (strlen($phone) > 8) {
+	  $phone = substr_replace($phone, '-', 7, 0);
+	}
+
+	// 3. Add the phone number to the message
+	$message .= "Phone: $phone\n";
 
         break;
 }
